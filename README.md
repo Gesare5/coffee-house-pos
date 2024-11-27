@@ -1,6 +1,6 @@
 # coffee-house-pos
-A sample POS system for a coffee house
-Console-app for now
+A sample POS system for a coffee house.
+Console-app for now.
 
 ## <u> What It Does </u>
 * Enables a Barista to Select User-Chosen Coffee Item from a Menu/Catalog
