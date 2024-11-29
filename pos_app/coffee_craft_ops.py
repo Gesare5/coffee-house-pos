@@ -24,7 +24,7 @@ def get_thresholds():
 
 def coffee_items():
     return {
-        "cafe latte": {"milk": 150, "coffee": 18, "sugar": 30},
+        "caffe latte": {"milk": 150, "coffee": 18, "sugar": 30},
         "vanilla latte": {"milk": 150, "coffee": 18, "sugar": 30, "vanilla syrup": 30},
         "espresso": {"coffee": 18, "sugar": 30},
         "cappuccino": {"milk": 150, "coffee": 18, "sugar": 30},
