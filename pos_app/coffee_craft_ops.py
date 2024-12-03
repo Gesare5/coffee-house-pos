@@ -36,17 +36,17 @@ def populate_coffee_items():
 
 
 def create_coffee_items_object():
-    read_list = read_from_store("coffee_items.csv")
+    coffee_items_list = read_from_store("coffee_items.csv")
     coffee_items_dict = {}
-    for i, v in enumerate(read_list):
-        if i < len(read_list) - 1:
-            coffee_items_dict[read_list[i + 1][0]] = {
-                read_list[0][1]: float(read_list[i + 1][1]),
-                read_list[0][2]: float(read_list[i + 1][2]),
-                read_list[0][3]: float(read_list[i + 1][3]),
-                read_list[0][4]: float(read_list[i + 1][4]),
-                read_list[0][5]: float(read_list[i + 1][5]),
-            }
+    # make enumerate start from index = 1
+    for i, v in enumerate(coffee_items_list):
+        if i < len(coffee_items_list) - 1:
+            sub_dict = {}
+            inner_list = coffee_items_list[i + 1]
+            for j, v in enumerate(inner_list):
+                if j < len(inner_list) - 1:
+                    sub_dict[coffee_items_list[0][j + 1]] = float(inner_list[j + 1])
+            coffee_items_dict[inner_list[0]] = sub_dict
 
     return coffee_items_dict
 
