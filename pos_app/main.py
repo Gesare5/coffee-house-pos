@@ -1,5 +1,5 @@
 from datetime import date
-from coffee_craft_ops import craft_a_coffee
+from coffee_craft_ops import craft_a_coffee, add_coffee_item
 
 
 
@@ -19,6 +19,18 @@ def selection_list() -> list[str]:
         "5: Mocha Latte",
     ]
 
+def manage_coffee_items_list():
+    return[
+        "1: Add Coffee Item",
+        "2: View Coffee Items"
+    ]
+
+def manage_coffee_items(choice):
+    if int(choice) == 1:
+        add_coffee_item()
+    else:
+        print(selection_list())
+
 def handle_prelim_action(action):
     match action:
         case 'a':
@@ -28,9 +40,14 @@ def handle_prelim_action(action):
             coffee_choice = input()
             handle_selection(int(coffee_choice))    
         case 'b':
-            print('Upcoming...........')
+            print('.................')
+            for value in manage_coffee_items_list():
+                print(value)
+            coffee_items_choice = input()
+            manage_coffee_items(coffee_items_choice)
         case 'c':
             return
+        
 
 def handle_selection(choice):
     choice_list = str.split(selection_list()[choice-1])
@@ -44,7 +61,6 @@ def main():
     print("Date", date.today())
     print("Welcome to TeleBaristas!")
     print("")
-
 
     while True:
         for value in prelim_list():

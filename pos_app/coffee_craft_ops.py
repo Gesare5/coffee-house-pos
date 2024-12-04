@@ -38,14 +38,14 @@ def populate_coffee_items():
 def create_coffee_items_object():
     coffee_items_list = read_from_store("coffee_items.csv")
     coffee_items_dict = {}
-    # make enumerate start from index = 1
-    for i, v in enumerate(coffee_items_list):
+
+    for i, _ in enumerate(coffee_items_list):
         if i < len(coffee_items_list) - 1:
             sub_dict = {}
             inner_list = coffee_items_list[i + 1]
-            for j, v in enumerate(inner_list):
+            for j, _ in enumerate(inner_list, 1):
                 if j < len(inner_list) - 1:
-                    sub_dict[coffee_items_list[0][j + 1]] = float(inner_list[j + 1])
+                    sub_dict[coffee_items_list[0][j]] = float(inner_list[j + 1])
             coffee_items_dict[inner_list[0]] = sub_dict
 
     return coffee_items_dict
@@ -69,3 +69,23 @@ def craft_a_coffee(coffee_type):
     # check quantities left, if below threshold create an alert!
     coffee.check_remaining_quantities(new_totals, get_thresholds())
     return
+
+
+def add_coffee_item():
+    print("Coffee_type? ")
+    coffee_type = input()
+    print("Milk Amount: ")
+    milk = input()
+    print("Coffee Amount: ")
+    coffee = input()
+    print("Sugar Amount: ")
+    sugar = input()
+    print("Vanilla: ")
+    vanilla = input()
+    print("Cocoa: ")
+    cocoa = input()
+    print("Cost: ")
+    cost = input()
+
+    new_coffee_item = [coffee_type, milk, coffee, sugar, vanilla, cocoa, cost]
+    write_to_store("coffee_items.csv", [new_coffee_item])
