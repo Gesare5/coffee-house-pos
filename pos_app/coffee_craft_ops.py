@@ -1,5 +1,5 @@
 from coffee_model import Coffee
-from data_store_operations import read_from_store, write_to_store
+from data_store_operations import read_from_store, write_to_store, overwrite_store
 
 
 def get_totals():
@@ -89,3 +89,24 @@ def add_coffee_item():
 
     new_coffee_item = [coffee_type, milk, coffee, sugar, vanilla, cocoa, cost]
     write_to_store("coffee_items.csv", [new_coffee_item])
+
+
+def remove_coffee_item(coffee_list):
+    # Print coffee menu selection
+    for value in coffee_list:
+        print(value)
+    choice = int(input())
+    choice_list = str.split(coffee_list[choice - 1])
+    if len(choice_list) >= 3:
+        coffee_choice = " ".join([choice_list[1], choice_list[2]]).lower()
+    else:
+        coffee_choice = choice_list[1].lower()
+
+    # read store and remove selected coffee_item from list
+    coffee_items_list = read_from_store("coffee_items.csv")
+    for i, value in enumerate(coffee_items_list):
+        if coffee_items_list[i][0] == coffee_choice:
+            coffee_items_list.remove(value)
+
+    # Publish altered list (with removed coffee_item) to store
+    overwrite_store("coffee_items.csv", coffee_items_list)

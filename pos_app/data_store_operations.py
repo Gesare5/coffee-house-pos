@@ -14,3 +14,9 @@ def write_to_store(file_name, data):
     with open(file_name, "a") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(data)
+
+
+def overwrite_store(file_name, data):
+    with open(file_name, "w") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(data)
