@@ -1,4 +1,4 @@
-# coffee-house-pos
+# COFFEE HOUSE POS
 A sample POS system for a coffee house.
 Console-app for now.
 
@@ -14,7 +14,7 @@ Note: Ensure to use python version >= 3.10
 
 1. Clone the repository:
 ```bash
- git clone https://github.com/Gesare5/store-management-python-django.git
+ git clone https://github.com/Gesare5/coffee-house-pos.git
 ```
 
 2. Create and activate a virtual env:
