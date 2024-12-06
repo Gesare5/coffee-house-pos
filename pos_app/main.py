@@ -1,8 +1,11 @@
 from datetime import date
-from coffee_craft_ops import add_coffee_item, generate_coffee_list, remove_coffee_item, craft_a_coffee
+from coffee_craft_ops import generate_coffee_list, generate_coffee_table_list, craft_a_coffee, manage_coffee_items
+from utils import generate_table
 
 
 COFFEE_SELECTION_LIST = generate_coffee_list()
+COFFEE_TABLE_SELECTION_LIST = generate_coffee_table_list()
+
 
 def prelim_list() -> list[str]:
     return [
@@ -13,45 +16,49 @@ def prelim_list() -> list[str]:
 
 def manage_coffee_items_list():
     return[
-        "1: Add Coffee Item",
-        "2: Delete Coffee Item",
-        "3: View Coffee Items"
+        ['1',"Add Coffee Item"],
+        ['2',"Delete Coffee Item"],
+        ['3',"View Coffee Items"]
     ]
-
-def manage_coffee_items(choice):
-    if choice == 1:
-        add_coffee_item()
-    elif choice == 2:
-        remove_coffee_item(COFFEE_SELECTION_LIST)
-    else:
-        print(COFFEE_SELECTION_LIST)
 
 def handle_prelim_action(action):
     match action:
         case 'a':
-            print("The available selection is:")
-            for value in COFFEE_SELECTION_LIST:
-                print(value)
+            print('')
+            generate_table(
+                COFFEE_TABLE_SELECTION_LIST, 
+                ['Choice', 'Coffee'], 
+                'bright_green', 
+                'Coffee List'
+                )
             coffee_choice = input()
             handle_selection(int(coffee_choice))    
+            print('')
+
         case 'b':
-            print('.................')
-            for value in manage_coffee_items_list():
-                print(value)
+            print('')
+            generate_table(
+                manage_coffee_items_list(), 
+                ['Choice', 'Item'], 
+                'bright_blue', 
+                'Manage Coffee Items'
+                )
             coffee_items_choice = int(input())
             manage_coffee_items(coffee_items_choice)
+            print('')
+
         case 'c':
             return
         
-
 def handle_selection(choice):
-    choice_list = str.split(COFFEE_SELECTION_LIST[choice-1])
-    if len(choice_list)>=3:
+    choice_list = str.split(COFFEE_SELECTION_LIST[choice - 1])
+    if len(choice_list) >= 3:
         coffe_choice = " ".join([choice_list[1], choice_list[2]]).lower()
     else:
         coffe_choice = choice_list[1].lower()
     craft_a_coffee(coffe_choice)
     return
+
 
 
 def main():

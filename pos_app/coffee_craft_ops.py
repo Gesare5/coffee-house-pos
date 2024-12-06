@@ -1,5 +1,6 @@
 from coffee_model import Coffee
 from data_store_operations import DataStoreOperations
+from utils import generate_table
 
 
 def get_totals():
@@ -42,6 +43,16 @@ def generate_coffee_list() -> list[str]:
     return coffee_list
 
 
+def generate_coffee_table_list() -> list[str]:
+    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+    coffee_list = []
+    for i, value in enumerate(read_list):
+        if i > 0:
+            coffee_item = [str(i), value[0]]
+            coffee_list.append(coffee_item)
+    return coffee_list
+
+
 def create_coffee_items_object():
     coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
     coffee_items_dict = {}
@@ -56,6 +67,20 @@ def create_coffee_items_object():
             coffee_items_dict[inner_list[0]] = sub_dict
 
     return coffee_items_dict
+
+
+def manage_coffee_items(choice):
+    if choice == 1:
+        add_coffee_item()
+    elif choice == 2:
+        remove_coffee_item(generate_coffee_list())
+    else:
+        generate_table(
+            generate_coffee_table_list(),
+            ["Choice", "Coffee"],
+            "bright_green",
+            "Coffee List",
+        )
 
 
 def craft_a_coffee(coffee_type):
