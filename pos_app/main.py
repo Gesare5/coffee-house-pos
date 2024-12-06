@@ -27,8 +27,8 @@ def handle_prelim_action(action):
             print('')
             generate_table(
                 COFFEE_TABLE_SELECTION_LIST, 
-                ['Choice', 'Coffee'], 
-                'bright_green', 
+                ['Choice', 'Coffee', 'Cost'], 
+                ['bright_blue', 'bright_magenta', 'bright_green'], 
                 'Coffee List'
                 )
             coffee_choice = input()
@@ -40,7 +40,7 @@ def handle_prelim_action(action):
             generate_table(
                 manage_coffee_items_list(), 
                 ['Choice', 'Item'], 
-                'bright_blue', 
+                ['bright_blue'], 
                 'Manage Coffee Items'
                 )
             coffee_items_choice = int(input())

@@ -48,7 +48,7 @@ def generate_coffee_table_list() -> list[str]:
     coffee_list = []
     for i, value in enumerate(read_list):
         if i > 0:
-            coffee_item = [str(i), value[0]]
+            coffee_item = [str(i), value[0], value[len(value) - 1]]
             coffee_list.append(coffee_item)
     return coffee_list
 
@@ -77,8 +77,8 @@ def manage_coffee_items(choice):
     else:
         generate_table(
             generate_coffee_table_list(),
-            ["Choice", "Coffee"],
-            "bright_green",
+            ["Choice", "Coffee", "Cost"],
+            ["bright_blue", "bright_magenta", "bright_green"],
             "Coffee List",
         )
 
