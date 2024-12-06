@@ -1,5 +1,5 @@
 from coffee_model import Coffee
-from data_store_operations import read_from_store, write_to_store, overwrite_store
+from data_store_operations import DataStoreOperations
 
 
 def get_totals():
@@ -9,9 +9,6 @@ def get_totals():
         "sugar": 10000,  # g
         "cocoa": 200,  # g
     }
-
-
-# TODO: keep track of units...
 
 
 def get_thresholds():
@@ -32,11 +29,21 @@ def populate_coffee_items():
         ["cappuccino", 150, 18, 30, 0, 0, 14.5],
         ["caffe mocha", 120, 16, 35, 0, 30, 13],
     ]
-    write_to_store("coffee_items.csv", data)
+    DataStoreOperations.write_to_store("coffee_items.csv", data)
+
+
+def generate_coffee_list() -> list[str]:
+    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+    coffee_list = []
+    for i, value in enumerate(read_list):
+        if i > 0:
+            coffee_item = "{0}: {1}".format(i, value[0])
+            coffee_list.append(coffee_item)
+    return coffee_list
 
 
 def create_coffee_items_object():
-    coffee_items_list = read_from_store("coffee_items.csv")
+    coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
     coffee_items_dict = {}
 
     for i, _ in enumerate(coffee_items_list):
@@ -88,7 +95,7 @@ def add_coffee_item():
     cost = input()
 
     new_coffee_item = [coffee_type, milk, coffee, sugar, vanilla, cocoa, cost]
-    write_to_store("coffee_items.csv", [new_coffee_item])
+    DataStoreOperations.write_to_store("coffee_items.csv", [new_coffee_item])
 
 
 def remove_coffee_item(coffee_list):
@@ -103,10 +110,10 @@ def remove_coffee_item(coffee_list):
         coffee_choice = choice_list[1].lower()
 
     # read store and remove selected coffee_item from list
-    coffee_items_list = read_from_store("coffee_items.csv")
+    coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
     for i, value in enumerate(coffee_items_list):
         if coffee_items_list[i][0] == coffee_choice:
             coffee_items_list.remove(value)
 
     # Publish altered list (with removed coffee_item) to store
-    overwrite_store("coffee_items.csv", coffee_items_list)
+    DataStoreOperations.overwrite_store("coffee_items.csv", coffee_items_list)

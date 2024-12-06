@@ -1,22 +1,14 @@
 from datetime import date
-from coffee_craft_ops import craft_a_coffee, add_coffee_item, remove_coffee_item
+from coffee_craft_ops import add_coffee_item, generate_coffee_list, remove_coffee_item, craft_a_coffee
 
 
+COFFEE_SELECTION_LIST = generate_coffee_list()
 
 def prelim_list() -> list[str]:
     return [
         "A: Order Coffee",
         "B: Manage Coffee Items",
         "C: Exit",
-    ]
-
-def selection_list() -> list[str]:
-    return [
-        "1: Caffe Latte",
-        "2: Vanilla Latte",
-        "3: Cappuccino",
-        "4: Espresso",
-        "5: Mocha Latte",
     ]
 
 def manage_coffee_items_list():
@@ -30,15 +22,15 @@ def manage_coffee_items(choice):
     if choice == 1:
         add_coffee_item()
     elif choice == 2:
-        remove_coffee_item(selection_list())
+        remove_coffee_item(COFFEE_SELECTION_LIST)
     else:
-        print(selection_list())
+        print(COFFEE_SELECTION_LIST)
 
 def handle_prelim_action(action):
     match action:
         case 'a':
             print("The available selection is:")
-            for value in selection_list():
+            for value in COFFEE_SELECTION_LIST:
                 print(value)
             coffee_choice = input()
             handle_selection(int(coffee_choice))    
@@ -53,7 +45,7 @@ def handle_prelim_action(action):
         
 
 def handle_selection(choice):
-    choice_list = str.split(selection_list()[choice-1])
+    choice_list = str.split(COFFEE_SELECTION_LIST[choice-1])
     if len(choice_list)>=3:
         coffe_choice = " ".join([choice_list[1], choice_list[2]]).lower()
     else:
@@ -76,8 +68,6 @@ def main():
             break
         else:
             handle_prelim_action(prelim_action)
-
-    
 
     
 
