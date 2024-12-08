@@ -1,9 +1,12 @@
 class Coffee:
-    def __init__(self, coffe_type, milk, coffee, sugar):
-        self.milk = milk  # in ml
-        self.coffee = coffee  # in grams
-        self.sugar = sugar  # in grams
-        self.type = coffe_type
+    def __init__(self, coffee_item):
+        self.type = coffee_item[0]
+        self.milk = float(coffee_item[1])  # in ml
+        self.coffee = float(coffee_item[2])  # in grams
+        self.sugar = float(coffee_item[3])  # in grams
+        self.vanilla = float(coffee_item[4])  # in grams
+        self.cocoa = float(coffee_item[5])  # in ml
+        self.cost = float(coffee_item[6])
 
     def get_quantities_consumed(self):
         return {"milk": self.milk, "sugar": self.sugar, "coffee": self.coffee}
@@ -13,8 +16,10 @@ class Coffee:
         totals["sugar"] = totals["sugar"] - self.sugar
         totals["coffee"] = totals["coffee"] - self.coffee
 
-        # if self.type == 'vanilla latte':
-        # totals['vanilla'] = totals['vanilla'] - self.extras.vanilla
+        if self.type == "vanilla latte":
+            totals["vanilla"] = totals["vanilla"] - self.vanilla
+        if self.type == "caffe mocha":
+            totals["cocoa"] = totals["cocoa"] - self.cocoa
         return totals
 
     def check_remaining_quantities(self, totals, thresholds):
@@ -29,39 +34,21 @@ class Coffee:
             print("")
 
         if totals["coffee"] < thresholds["coffee"]:
-            print("Alert!! Running out of coffe")
+            print("Alert!! Running out of coffee")
             print("Amount of coffee left: ", totals["coffee"], "g")
             print("")
+
+        if totals["vanilla"] < thresholds["vanilla"]:
+            print("Alert!! Running out of vanilla")
+            print("Amount of vanilla left: ", totals["vanilla"], "ml")
+            print("")
+
+        if totals["cocoa"] < thresholds["cocoa"]:
+            print("Alert!! Running out of cocoa")
+            print("Amount of cocoa left: ", totals["cocoa"], "g")
+            print("")
+
         return
 
-
-# TODO
-# HANDLE ALL THIS REPETITION
-# ALLOW SELECTION OF MULTIPLE COFFEES AND COFFE MULTIPLES
-
-# caffe latte ->
-# 150ml steamed milk
-# 18g ground coffee beans
-# sugar - how  many
-
-# vanilla latte ->
-# 150ml steamed milk
-# 18g ground coffee beans
-# 2 tbsp/ 30 ml vanilla syrup
-# sugar - how  many
-
-# espresso ->
-# 18 g coffee beans
-# 1.5 * 18g water
-
-# Cappuccino ->
-# 18 g coffee beans
-# 60 ml steamed milk
-# 60 ml foamed milk
-
-# caffe mocha ->
-# 2 tbsp/ 28.3g cocoa powder
-# 2.84g / 1/2 teaspoon sugar
-# 16 g coffee beans
-# 15 ml hot water
-# 120 ml steamed milk
+    def calculate_total_earned():
+        pass

@@ -8,6 +8,7 @@ def get_totals():
         "coffee": 10000,  # g
         "milk": 10000,  # ml
         "sugar": 10000,  # g
+        "vanilla": 1000,  # ml
         "cocoa": 200,  # g
     }
 
@@ -17,6 +18,7 @@ def get_thresholds():
         "coffee": 10000,  # g
         "milk": 10000,  # ml
         "sugar": 10000,  # g
+        "vanilla": 1000,  # ml
         "cocoa": 200,  # g
     }
 
@@ -84,16 +86,11 @@ def manage_coffee_items(choice):
 
 
 def craft_a_coffee(coffee_type):
-    coffee_items = create_coffee_items_object()
-    coffee_details = coffee_items[coffee_type]
-
     # create a coffee object
-    coffee = Coffee(
-        coffee_type,
-        coffee_details["milk"],
-        coffee_details["coffee"],
-        coffee_details["sugar"],
-    )
+    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+    for coffee_item in read_list:
+        if coffee_type == coffee_item[0]:
+            coffee = Coffee(coffee_item)
 
     # subtract quantities
     new_totals = coffee.subtract_quantitites_from_total(get_totals())
