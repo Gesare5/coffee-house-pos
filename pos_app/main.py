@@ -39,7 +39,9 @@ def handle_prelim_action(action):
                 "Coffee List",
             )
             coffee_choice = input()
-            handle_selection(int(coffee_choice))
+            print('How many? ')
+            quantity = input()
+            handle_selection(int(coffee_choice), int(quantity))
             print("")
 
         case "b":
@@ -58,13 +60,14 @@ def handle_prelim_action(action):
             return
 
 
-def handle_selection(choice):
+def handle_selection(choice, quantity):
     choice_list = str.split(COFFEE_SELECTION_LIST[choice - 1])
     if len(choice_list) >= 3:
         coffee_type = " ".join([choice_list[1], choice_list[2]]).lower()
     else:
         coffee_type = choice_list[1].lower()
-    craft_a_coffee(coffee_type)
+    for i in range(quantity):    
+        craft_a_coffee(coffee_type)
     return
 
 

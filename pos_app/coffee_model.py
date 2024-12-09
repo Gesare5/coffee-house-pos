@@ -49,6 +49,3 @@ class Coffee:
             print("")
 
         return
-
-    def calculate_total_earned():
-        pass

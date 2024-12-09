@@ -1,3 +1,4 @@
+from datetime import date
 from coffee_model import Coffee
 from data_store_operations import DataStoreOperations
 from utils import generate_table
@@ -97,7 +98,15 @@ def craft_a_coffee(coffee_type):
 
     # check quantities left, if below threshold create an alert!
     coffee.check_remaining_quantities(new_totals, get_thresholds())
+
+    # Save to daily report
+    report_name = "Daily_Sales_{0}.csv".format(date.today())
+    report_data = [coffee.type, coffee.cost]
+    DataStoreOperations.write_to_store(report_name, [report_data])
     return
+
+
+# TODO: PRINT DAILY REPORT FUNCTION->TABLE
 
 
 def add_coffee_item():
@@ -139,3 +148,16 @@ def remove_coffee_item(coffee_list):
 
     # Publish altered list (with removed coffee_item) to store
     DataStoreOperations.overwrite_store("coffee_items.csv", coffee_items_list)
+
+
+def calculate_total_daily_sales(day):
+    report_name = "Daily_Sales_{0}.csv".format(day)
+    read_list = DataStoreOperations.read_from_store(report_name)
+    total_sale = 0
+    for _, coffee_item in enumerate(read_list):
+        total_sale = total_sale + float(coffee_item[1])
+    return total_sale
+
+
+# TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
+# THINK ABOUT SOME TESTS
