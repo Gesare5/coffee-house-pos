@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from coffee_model import Coffee
 from data_store_operations import DataStoreOperations
 from utils import generate_table
@@ -92,6 +92,7 @@ def craft_a_coffee(coffee_type):
     for coffee_item in read_list:
         if coffee_type == coffee_item[0]:
             coffee = Coffee(coffee_item)
+            print("Successfully created coffee!")
 
     # subtract quantities
     new_totals = coffee.subtract_quantitites_from_total(get_totals())
@@ -101,7 +102,7 @@ def craft_a_coffee(coffee_type):
 
     # Save to daily report
     report_name = "Daily_Sales_{0}.csv".format(date.today())
-    report_data = [coffee.type, coffee.cost]
+    report_data = [coffee.type, coffee.cost, datetime.time(coffee.created_at)]
     DataStoreOperations.write_to_store(report_name, [report_data])
     return
 
