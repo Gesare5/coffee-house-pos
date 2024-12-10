@@ -31,19 +31,32 @@ def manage_coffee_items_list():
 def handle_prelim_action(action):
     match action:
         case "a":
-            print("")
-            generate_table(
-                COFFEE_TABLE_SELECTION_LIST,
-                ["Choice", "Coffee", "Cost"],
-                ["bright_blue", "bright_magenta", "bright_green"],
-                "Coffee List",
-            )
-            coffee_choice = input()
-            print('How many? ')
-            quantity = input()
-            handle_selection(int(coffee_choice), int(quantity))
-            print("")
-
+            COFFEE_TABLE_SELECTION_LIST.append(['0', 'Done!!', ''])
+            while True:
+                print("")
+                generate_table(
+                    COFFEE_TABLE_SELECTION_LIST,
+                    ["Choice", "Coffee", "Cost"],
+                    ["bright_blue", "bright_magenta", "bright_green"],
+                    "Coffee List",
+                )
+                coffee_choice = input()
+                if coffee_choice.isdigit() and int(coffee_choice)<len(COFFEE_TABLE_SELECTION_LIST):
+                    if coffee_choice == '0':
+                        break
+                    else:    
+                        print('How many? ')
+                        quantity = input()
+                        if quantity.isdigit():
+                            handle_selection(int(coffee_choice), int(quantity))
+                            print("")
+                        else:
+                            print('Invalid value!!')
+                            print("")
+                            break   
+                else:
+                    print('Invalid Choice!!')
+                    continue        
         case "b":
             print("")
             generate_table(
