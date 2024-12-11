@@ -31,7 +31,7 @@ def manage_coffee_items_list():
 def handle_prelim_action(action):
     match action:
         case "a":
-            COFFEE_TABLE_SELECTION_LIST.append(['0', 'Done!!', ''])
+            COFFEE_TABLE_SELECTION_LIST.append(["0", "Done!!", ""])
             while True:
                 print("")
                 generate_table(
@@ -41,22 +41,24 @@ def handle_prelim_action(action):
                     "Coffee List",
                 )
                 coffee_choice = input()
-                if coffee_choice.isdigit() and int(coffee_choice)<len(COFFEE_TABLE_SELECTION_LIST):
-                    if coffee_choice == '0':
+                if coffee_choice.isdigit() and int(coffee_choice) < len(
+                    COFFEE_TABLE_SELECTION_LIST
+                ):
+                    if coffee_choice == "0":
                         break
-                    else:    
-                        print('How many? ')
+                    else:
+                        print("How many? ")
                         quantity = input()
                         if quantity.isdigit():
                             handle_selection(int(coffee_choice), int(quantity))
                             print("")
                         else:
-                            print('Invalid value!!')
+                            print("Invalid value!!")
                             print("")
-                            break   
+                            break
                 else:
-                    print('Invalid Choice!!')
-                    continue        
+                    print("Invalid Choice!!")
+                    continue
         case "b":
             print("")
             generate_table(
@@ -79,7 +81,7 @@ def handle_selection(choice, quantity):
         coffee_type = " ".join([choice_list[1], choice_list[2]]).lower()
     else:
         coffee_type = choice_list[1].lower()
-    for i in range(quantity):    
+    for i in range(quantity):
         craft_a_coffee(coffee_type)
     return
 
