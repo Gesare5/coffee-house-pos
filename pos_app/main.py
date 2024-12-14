@@ -1,11 +1,11 @@
 from datetime import date
-from coffee_craft_ops import (
+from pos_app.coffee_craft_ops import (
     generate_coffee_list,
     generate_coffee_table_list,
     craft_a_coffee,
     manage_coffee_items,
 )
-from utils import generate_table
+from pos_app.utils import generate_table
 
 
 COFFEE_SELECTION_LIST = generate_coffee_list()

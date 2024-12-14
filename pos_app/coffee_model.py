@@ -1,5 +1,5 @@
 from datetime import datetime
-from utils import generate_table
+from pos_app.utils import generate_table
 
 
 class Coffee:
