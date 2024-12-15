@@ -14,6 +14,9 @@ def get_totals():
     }
 
 
+# TODO: read from file
+
+
 def get_thresholds():
     return {
         "coffee": 10000,  # g
@@ -22,6 +25,9 @@ def get_thresholds():
         "vanilla": 1000,  # ml
         "cocoa": 200,  # g
     }
+
+
+# TODO: read from file
 
 
 def populate_coffee_items():

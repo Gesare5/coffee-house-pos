@@ -14,7 +14,13 @@ class Coffee:
         self.created_at = datetime.now()
 
     def get_quantities_consumed(self):
-        return {"milk": self.milk, "sugar": self.sugar, "coffee": self.coffee}
+        return {
+            "milk": self.milk,
+            "sugar": self.sugar,
+            "coffee": self.coffee,
+            "vanilla": self.vanilla,
+            "cocoa": self.cocoa,
+        }
 
     def subtract_quantitites_from_total(self, totals):
         totals["milk"] = totals["milk"] - self.milk
