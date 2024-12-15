@@ -1,7 +1,7 @@
 from datetime import date, datetime
-from pos_app.coffee_model import Coffee
-from pos_app.data_store_operations import DataStoreOperations
-from pos_app.utils import generate_table
+from coffee_model import Coffee
+from data_store_operations import DataStoreOperations
+from utils import generate_table
 
 
 def get_totals():

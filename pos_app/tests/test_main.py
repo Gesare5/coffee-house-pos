@@ -1,4 +1,4 @@
-from pos_app.main import prelim_list, manage_coffee_items_list
+from main import prelim_list, manage_coffee_items_list
 
 
 def test_prelim_list():
