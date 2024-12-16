@@ -23,14 +23,14 @@ class Coffee:
         }
 
     def subtract_quantitites_from_total(self, totals):
-        totals["milk"] = totals["milk"] - self.milk
-        totals["sugar"] = totals["sugar"] - self.sugar
-        totals["coffee"] = totals["coffee"] - self.coffee
+        totals["milk"] = float(totals["milk"]) - self.milk
+        totals["sugar"] = float(totals["sugar"]) - self.sugar
+        totals["coffee"] = float(totals["coffee"]) - self.coffee
 
         if self.type == "vanilla latte":
-            totals["vanilla"] = totals["vanilla"] - self.vanilla
+            totals["vanilla"] = float(totals["vanilla"]) - self.vanilla
         if self.type == "caffe mocha":
-            totals["cocoa"] = totals["cocoa"] - self.cocoa
+            totals["cocoa"] = float(totals["cocoa"]) - self.cocoa
         return totals
 
     def generate_alert(self, title, total_value, unit):

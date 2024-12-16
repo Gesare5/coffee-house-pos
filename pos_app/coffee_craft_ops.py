@@ -5,29 +5,21 @@ from utils import generate_table
 
 
 def get_totals():
-    return {
-        "coffee": 10000,  # g
-        "milk": 10000,  # ml
-        "sugar": 10000,  # g
-        "vanilla": 1000,  # ml
-        "cocoa": 200,  # g
-    }
+    read_list = DataStoreOperations.read_from_store("inventory.csv")
+    totals = {}
+    for value in read_list:
+        totals[value[0]] = value[1]
 
-
-# TODO: read from file
+    return totals
 
 
 def get_thresholds():
-    return {
-        "coffee": 10000,  # g
-        "milk": 10000,  # ml
-        "sugar": 10000,  # g
-        "vanilla": 1000,  # ml
-        "cocoa": 200,  # g
-    }
+    read_list = DataStoreOperations.read_from_store("thresholds.csv")
+    thresholds = {}
+    for value in read_list:
+        thresholds[value[0]] = value[1]
 
-
-# TODO: read from file
+    return thresholds
 
 
 def populate_coffee_items():
