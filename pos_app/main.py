@@ -4,6 +4,7 @@ from coffee_craft_ops import (
     generate_coffee_table_list,
     craft_a_coffee,
     manage_coffee_items,
+    print_receipt,
 )
 from utils import generate_table
 
@@ -13,6 +14,7 @@ COFFEE_TABLE_SELECTION_LIST = generate_coffee_table_list()
 
 
 def prelim_list() -> list[str]:
+    print("")
     return [
         "A: Order Coffee",
         "B: Manage Coffee Items",
@@ -21,6 +23,7 @@ def prelim_list() -> list[str]:
 
 
 def manage_coffee_items_list():
+    print("")
     return [
         ["1", "Add Coffee Item"],
         ["2", "Delete Coffee Item"],
@@ -32,6 +35,7 @@ def handle_prelim_action(action):
     match action:
         case "a":
             COFFEE_TABLE_SELECTION_LIST.append(["0", "Done!!", ""])
+            coffees_per_customer = []
             while True:
                 print("")
                 generate_table(
@@ -51,6 +55,12 @@ def handle_prelim_action(action):
                         quantity = input()
                         if quantity.isdigit():
                             handle_selection(int(coffee_choice), int(quantity))
+                            coffees = [
+                                COFFEE_TABLE_SELECTION_LIST[int(coffee_choice) - 1][1],
+                                COFFEE_TABLE_SELECTION_LIST[int(coffee_choice) - 1][2],
+                                int(quantity),
+                            ]
+                            coffees_per_customer.append(coffees)
                             print("")
                         else:
                             print("Invalid value!!")
@@ -59,6 +69,7 @@ def handle_prelim_action(action):
                 else:
                     print("Invalid Choice!!")
                     continue
+            print_receipt(coffees_per_customer)
         case "b":
             print("")
             generate_table(

@@ -166,5 +166,37 @@ def print_daily_report(day):
     )
 
 
+def print_receipt(coffees_per_customer):
+    receipt_list = []
+    total = 0
+    for coffee in coffees_per_customer:
+        subtotal = float(coffee[1]) * float(coffee[2])
+        coffee_item = [
+            coffee[0],
+            coffee[1],
+            "x {0}".format(coffee[2]),
+            str(subtotal),
+        ]
+        receipt_list.append(coffee_item)
+        total = total + subtotal
+
+    receipt_list.append(["", "", "", ""])
+    receipt_list.append(["total", "", "", str(total)])
+    print("")
+    generate_table(
+        receipt_list,
+        ["Coffee", "Cost", "Quantity", "Subtotal"],
+        [
+            "bright_blue",
+            "bright_green",
+            "bright_magenta",
+            "bright_green",
+        ],
+        "RECEIPT",
+    )
+    print("")
+
+
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
 # THINK ABOUT SOME TESTS
+# add and subtract inventory
