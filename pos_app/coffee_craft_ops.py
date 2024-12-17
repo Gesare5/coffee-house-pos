@@ -8,7 +8,7 @@ def get_totals():
     read_list = DataStoreOperations.read_from_store("inventory.csv")
     totals = {}
     for value in read_list:
-        totals[value[0]] = value[1]
+        totals[value[0]] = float(value[1])
 
     return totals
 
@@ -17,7 +17,7 @@ def get_thresholds():
     read_list = DataStoreOperations.read_from_store("thresholds.csv")
     thresholds = {}
     for value in read_list:
-        thresholds[value[0]] = value[1]
+        thresholds[value[0]] = float(value[1])
 
     return thresholds
 
@@ -105,9 +105,6 @@ def craft_a_coffee(coffee_type):
     return
 
 
-# TODO: PRINT DAILY REPORT FUNCTION->TABLE
-
-
 def add_coffee_item():
     print("Coffee_type? ")
     coffee_type = input()
@@ -156,6 +153,17 @@ def calculate_total_daily_sales(day):
     for _, coffee_item in enumerate(read_list):
         total_sale = total_sale + float(coffee_item[1])
     return total_sale
+
+
+def print_daily_report(day):
+    report_name = "Daily_Sales_{0}.csv".format(day)
+    read_list = DataStoreOperations.read_from_store(report_name)
+    generate_table(
+        read_list,
+        ["Coffee", "Cost", "Created At"],
+        ["bright_blue", "bright_green", "bright_magenta"],
+        "Daily_Report_{0}".format(day),
+    )
 
 
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
