@@ -200,3 +200,4 @@ def print_receipt(coffees_per_customer):
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
 # THINK ABOUT SOME TESTS
 # add and subtract inventory
+# add docstrings to functions

@@ -62,6 +62,8 @@ def handle_prelim_action(action):
                             ]
                             coffees_per_customer.append(coffees)
                             print("")
+                            print("Anything Else? ")
+                            print("")
                         else:
                             print("Invalid value!!")
                             print("")
