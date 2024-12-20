@@ -5,6 +5,7 @@ from coffee_craft_ops import (
     craft_a_coffee,
     manage_coffee_items,
     print_receipt,
+    check_remaining_quantities
 )
 from utils import generate_table
 
@@ -71,7 +72,11 @@ def handle_prelim_action(action):
                 else:
                     print("Invalid Choice!!")
                     continue
+                
             print_receipt(coffees_per_customer)
+            # check quantities left, if below threshold create an alert!
+            check_remaining_quantities()
+
         case "b":
             print("")
             generate_table(

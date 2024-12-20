@@ -32,35 +32,3 @@ class Coffee:
         if self.type == "caffe mocha":
             totals["cocoa"] = float(totals["cocoa"]) - self.cocoa
         return totals
-
-    def generate_alert(self, title, total_value, unit):
-        alert = [
-            "Alert!! Running out of {0}.\nAmount of {0} left: {1} {2}.".format(
-                title, total_value, unit
-            )
-        ]
-        generate_table(
-            [alert],
-            ["Alert!"],
-            ["bright_red"],
-            "",
-        )
-        print("")
-
-    def check_remaining_quantities(self, totals, thresholds):
-        if totals["milk"] < thresholds["milk"]:
-            self.generate_alert("milk", totals["milk"], "ml")
-
-        if totals["sugar"] < thresholds["sugar"]:
-            self.generate_alert("sugar", totals["sugar"], "g")
-
-        if totals["coffee"] < thresholds["coffee"]:
-            self.generate_alert("coffee", totals["coffee"], "g")
-
-        if totals["vanilla"] < thresholds["vanilla"]:
-            self.generate_alert("vanilla", totals["vanilla"], "ml")
-
-        if totals["cocoa"] < thresholds["cocoa"]:
-            self.generate_alert("cocoa", totals["cocoa"], "g")
-
-        return

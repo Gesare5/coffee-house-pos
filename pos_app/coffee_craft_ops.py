@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from coffee_model import Coffee
 from data_store_operations import DataStoreOperations
-from utils import generate_table
+from utils import generate_table, generate_alert
 
 
 def get_totals():
@@ -95,8 +95,15 @@ def craft_a_coffee(coffee_type):
     # subtract quantities
     new_totals = coffee.subtract_quantitites_from_total(get_totals())
 
-    # check quantities left, if below threshold create an alert!
-    coffee.check_remaining_quantities(new_totals, get_thresholds())
+    # Save new totals to file
+    store_data = [
+        ["coffee", new_totals["coffee"]],
+        ["milk", new_totals["milk"]],
+        ["sugar", new_totals["sugar"]],
+        ["vanilla", new_totals["vanilla"]],
+        ["cocoa", new_totals["cocoa"]],
+    ]
+    DataStoreOperations.write_to_store("inventory.csv", store_data)
 
     # Save to daily report
     report_name = "Daily_Sales_{0}.csv".format(date.today())
@@ -195,6 +202,27 @@ def print_receipt(coffees_per_customer):
         "RECEIPT",
     )
     print("")
+
+
+def check_remaining_quantities():
+    thresholds = get_thresholds()
+    totals = get_totals()
+    if totals["milk"] < thresholds["milk"]:
+        generate_alert("milk", totals["milk"], "ml")
+
+    if totals["sugar"] < thresholds["sugar"]:
+        generate_alert("sugar", totals["sugar"], "g")
+
+    if totals["coffee"] < thresholds["coffee"]:
+        generate_alert("coffee", totals["coffee"], "g")
+
+    if totals["vanilla"] < thresholds["vanilla"]:
+        generate_alert("vanilla", totals["vanilla"], "ml")
+
+    if totals["cocoa"] < thresholds["cocoa"]:
+        generate_alert("cocoa", totals["cocoa"], "g")
+
+    return
 
 
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
