@@ -29,6 +29,7 @@ def manage_coffee_items_list():
         ["1", "Add Coffee Item"],
         ["2", "Delete Coffee Item"],
         ["3", "View Coffee Items"],
+        ["4", "Add Supplies"]
     ]
 
 

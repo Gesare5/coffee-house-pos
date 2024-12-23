@@ -75,6 +75,18 @@ def manage_coffee_items(choice):
         add_coffee_item()
     elif choice == 2:
         remove_coffee_item(generate_coffee_list())
+    elif choice == 4:
+        supplies = ["1: Milk", "2: Coffee", "3: Sugar", "4: Cocoa", "5: Vanilla"]
+        print("Select supply: ")
+        for supply in supplies:
+            print(supply)
+        supply = int(input())
+        print("")
+        print("Amount in grams/millilitre: ")
+        amount = input()
+        print("")
+        replenish_inventory(supplies[supply - 1], amount)
+
     else:
         generate_table(
             generate_coffee_table_list(),
@@ -225,7 +237,20 @@ def check_remaining_quantities():
     return
 
 
+def replenish_inventory(supply_item, amount):
+    supply = str.lower(str.split(supply_item)[1])
+    totals = get_totals()
+    totals[supply] = amount
+    store_data = [
+        ["coffee", totals["coffee"]],
+        ["milk", totals["milk"]],
+        ["sugar", totals["sugar"]],
+        ["vanilla", totals["vanilla"]],
+        ["cocoa", totals["cocoa"]],
+    ]
+    DataStoreOperations.write_to_store("inventory.csv", store_data)
+    print("Successfully updated inventory!!")
+
+
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
-# THINK ABOUT SOME TESTS
-# add and subtract inventory
 # add docstrings to functions
