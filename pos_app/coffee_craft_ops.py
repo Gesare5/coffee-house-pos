@@ -5,21 +5,27 @@ from utils import generate_table, generate_alert
 
 
 def get_totals():
-    read_list = DataStoreOperations.read_from_store("inventory.csv")
-    totals = {}
-    for value in read_list:
-        totals[value[0]] = float(value[1])
+    try:
+        read_list = DataStoreOperations.read_from_store("inventory.csv")
+        totals = {}
+        for value in read_list:
+            totals[value[0]] = float(value[1])
 
-    return totals
+        return totals
+    except:
+        print("Failed to fetch inventory totals from store!!")
 
 
 def get_thresholds():
-    read_list = DataStoreOperations.read_from_store("thresholds.csv")
-    thresholds = {}
-    for value in read_list:
-        thresholds[value[0]] = float(value[1])
+    try:
+        read_list = DataStoreOperations.read_from_store("thresholds.csv")
+        thresholds = {}
+        for value in read_list:
+            thresholds[value[0]] = float(value[1])
 
-    return thresholds
+        return thresholds
+    except:
+        print("Failed to fetch inventory thresholds from store!!")
 
 
 def populate_coffee_items():
@@ -31,43 +37,54 @@ def populate_coffee_items():
         ["cappuccino", 150, 18, 30, 0, 0, 14.5],
         ["caffe mocha", 120, 16, 35, 0, 30, 13],
     ]
-    DataStoreOperations.write_to_store("coffee_items.csv", data)
+    try:
+        DataStoreOperations.write_to_store("coffee_items.csv", data)
+    except:
+        print("Failed to populate coffee items store!!")
 
 
 def generate_coffee_list() -> list[str]:
-    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
-    coffee_list = []
-    for i, value in enumerate(read_list):
-        if i > 0:
-            coffee_item = "{0}: {1}".format(i, value[0])
-            coffee_list.append(coffee_item)
-    return coffee_list
+    try:
+        read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+        coffee_list = []
+        for i, value in enumerate(read_list):
+            if i > 0:
+                coffee_item = "{0}: {1}".format(i, value[0])
+                coffee_list.append(coffee_item)
+        return coffee_list
+    except:
+        print("Failed to generate coffee list!!")
 
 
 def generate_coffee_table_list() -> list[str]:
-    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
-    coffee_list = []
-    for i, value in enumerate(read_list):
-        if i > 0:
-            coffee_item = [str(i), value[0], value[len(value) - 1]]
-            coffee_list.append(coffee_item)
-    return coffee_list
+    try:
+        read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+        coffee_list = []
+        for i, value in enumerate(read_list):
+            if i > 0:
+                coffee_item = [str(i), value[0], value[len(value) - 1]]
+                coffee_list.append(coffee_item)
+        return coffee_list
+    except:
+        print("Failed to generate coffee table list!!")
 
 
 def create_coffee_items_object():
-    coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
-    coffee_items_dict = {}
+    try:
+        coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
+        coffee_items_dict = {}
 
-    for i, _ in enumerate(coffee_items_list):
-        if i < len(coffee_items_list) - 1:
-            sub_dict = {}
-            inner_list = coffee_items_list[i + 1]
-            for j, _ in enumerate(inner_list, 1):
-                if j < len(inner_list) - 1:
-                    sub_dict[coffee_items_list[0][j]] = float(inner_list[j + 1])
-            coffee_items_dict[inner_list[0]] = sub_dict
-
-    return coffee_items_dict
+        for i, _ in enumerate(coffee_items_list):
+            if i < len(coffee_items_list) - 1:
+                sub_dict = {}
+                inner_list = coffee_items_list[i + 1]
+                for j, _ in enumerate(inner_list, 1):
+                    if j < len(inner_list) - 1:
+                        sub_dict[coffee_items_list[0][j]] = float(inner_list[j + 1])
+                coffee_items_dict[inner_list[0]] = sub_dict
+        return coffee_items_dict
+    except:
+        print("Failed to create coffee items object!!")
 
 
 def manage_coffee_items(choice):
@@ -97,30 +114,33 @@ def manage_coffee_items(choice):
 
 
 def craft_a_coffee(coffee_type):
-    # create a coffee object
-    read_list = DataStoreOperations.read_from_store("coffee_items.csv")
-    for coffee_item in read_list:
-        if coffee_type == coffee_item[0]:
-            coffee = Coffee(coffee_item)
-            print("Successfully created coffee!")
+    try:
+        # create a coffee object
+        read_list = DataStoreOperations.read_from_store("coffee_items.csv")
+        for coffee_item in read_list:
+            if coffee_type == coffee_item[0]:
+                coffee = Coffee(coffee_item)
+                print("Successfully created coffee!")
 
-    # subtract quantities
-    new_totals = coffee.subtract_quantitites_from_total(get_totals())
+        # subtract quantities
+        new_totals = coffee.subtract_quantitites_from_total(get_totals())
 
-    # Save new totals to file
-    store_data = [
-        ["coffee", new_totals["coffee"]],
-        ["milk", new_totals["milk"]],
-        ["sugar", new_totals["sugar"]],
-        ["vanilla", new_totals["vanilla"]],
-        ["cocoa", new_totals["cocoa"]],
-    ]
-    DataStoreOperations.write_to_store("inventory.csv", store_data)
+        # Save new totals to file
+        store_data = [
+            ["coffee", new_totals["coffee"]],
+            ["milk", new_totals["milk"]],
+            ["sugar", new_totals["sugar"]],
+            ["vanilla", new_totals["vanilla"]],
+            ["cocoa", new_totals["cocoa"]],
+        ]
+        DataStoreOperations.write_to_store("inventory.csv", store_data)
 
-    # Save to daily report
-    report_name = "Daily_Sales_{0}.csv".format(date.today())
-    report_data = [coffee.type, coffee.cost, datetime.time(coffee.created_at)]
-    DataStoreOperations.write_to_store(report_name, [report_data])
+        # Save to daily report
+        report_name = "Daily_Sales_{0}.csv".format(date.today())
+        report_data = [coffee.type, coffee.cost, datetime.time(coffee.created_at)]
+        DataStoreOperations.write_to_store(report_name, [report_data])
+    except:
+        print("Failed to update inventory and generate report!!")
     return
 
 
@@ -141,7 +161,10 @@ def add_coffee_item():
     cost = input()
 
     new_coffee_item = [coffee_type, milk, coffee, sugar, vanilla, cocoa, cost]
-    DataStoreOperations.write_to_store("coffee_items.csv", [new_coffee_item])
+    try:
+        DataStoreOperations.write_to_store("coffee_items.csv", [new_coffee_item])
+    except:
+        print("Failed to add coffee item!!")
 
 
 def remove_coffee_item(coffee_list):
@@ -155,34 +178,43 @@ def remove_coffee_item(coffee_list):
     else:
         coffee_choice = choice_list[1].lower()
 
-    # read store and remove selected coffee_item from list
-    coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
-    for i, value in enumerate(coffee_items_list):
-        if coffee_items_list[i][0] == coffee_choice:
-            coffee_items_list.remove(value)
+    try:
+        # read store and remove selected coffee_item from list
+        coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
+        for i, value in enumerate(coffee_items_list):
+            if coffee_items_list[i][0] == coffee_choice:
+                coffee_items_list.remove(value)
 
-    # Publish altered list (with removed coffee_item) to store
-    DataStoreOperations.overwrite_store("coffee_items.csv", coffee_items_list)
+        # Publish altered list (with removed coffee_item) to store
+        DataStoreOperations.overwrite_store("coffee_items.csv", coffee_items_list)
+    except:
+        print("Failed to update remove coffee item!!")
 
 
 def calculate_total_daily_sales(day):
     report_name = "Daily_Sales_{0}.csv".format(day)
-    read_list = DataStoreOperations.read_from_store(report_name)
     total_sale = 0
-    for _, coffee_item in enumerate(read_list):
-        total_sale = total_sale + float(coffee_item[1])
-    return total_sale
+    try:
+        read_list = DataStoreOperations.read_from_store(report_name)
+        for _, coffee_item in enumerate(read_list):
+            total_sale = total_sale + float(coffee_item[1])
+        return total_sale
+    except:
+        print("Failed to fetch sales for {0}!!".format(day))
 
 
 def print_daily_report(day):
     report_name = "Daily_Sales_{0}.csv".format(day)
-    read_list = DataStoreOperations.read_from_store(report_name)
-    generate_table(
-        read_list,
-        ["Coffee", "Cost", "Created At"],
-        ["bright_blue", "bright_green", "bright_magenta"],
-        "Daily_Report_{0}".format(day),
-    )
+    try:
+        read_list = DataStoreOperations.read_from_store(report_name)
+        generate_table(
+            read_list,
+            ["Coffee", "Cost", "Created At"],
+            ["bright_blue", "bright_green", "bright_magenta"],
+            "Daily_Report_{0}".format(day),
+        )
+    except:
+        print("Failed to fetch report!!")
 
 
 def print_receipt(coffees_per_customer):
@@ -248,8 +280,11 @@ def replenish_inventory(supply_item, amount):
         ["vanilla", totals["vanilla"]],
         ["cocoa", totals["cocoa"]],
     ]
-    DataStoreOperations.write_to_store("inventory.csv", store_data)
-    print("Successfully updated inventory!!")
+    try:
+        DataStoreOperations.write_to_store("inventory.csv", store_data)
+        print("Successfully updated inventory!!")
+    except:
+        print("Failed to update inventory!!")
 
 
 # TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
