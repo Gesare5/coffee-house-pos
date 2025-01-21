@@ -9,7 +9,8 @@ def get_totals():
         read_list = DataStoreOperations.read_from_store("inventory.csv")
         totals = {}
         for value in read_list:
-            totals[value[0]] = float(value[1])
+            if value and value[0] is not None:
+                totals[value[0]] = float(value[1])
 
         return totals
     except:
@@ -94,6 +95,7 @@ def manage_coffee_items(choice):
         remove_coffee_item(generate_coffee_list())
     elif choice == 4:
         supplies = ["1: Milk", "2: Coffee", "3: Sugar", "4: Cocoa", "5: Vanilla"]
+        # Read this from file
         print("Select supply: ")
         for supply in supplies:
             print(supply)
@@ -272,7 +274,7 @@ def check_remaining_quantities():
 def replenish_inventory(supply_item, amount):
     supply = str.lower(str.split(supply_item)[1])
     totals = get_totals()
-    totals[supply] = amount
+    totals[supply] = float(totals[supply]) + float(amount)
     store_data = [
         ["coffee", totals["coffee"]],
         ["milk", totals["milk"]],
