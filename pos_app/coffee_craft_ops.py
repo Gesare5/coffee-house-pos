@@ -134,6 +134,7 @@ def craft_a_coffee(coffee_type):
             ["sugar", new_totals["sugar"]],
             ["vanilla", new_totals["vanilla"]],
             ["cocoa", new_totals["cocoa"]],
+            [" "],
         ]
         DataStoreOperations.write_to_store("inventory.csv", store_data)
 
@@ -148,7 +149,7 @@ def craft_a_coffee(coffee_type):
 
 def add_coffee_item():
     print("Coffee_type? ")
-    coffee_type = input()
+    coffee_type = str.lower(input())
     print("Milk Amount: ")
     milk = input()
     print("Coffee Amount: ")
@@ -165,6 +166,7 @@ def add_coffee_item():
     new_coffee_item = [coffee_type, milk, coffee, sugar, vanilla, cocoa, cost]
     try:
         DataStoreOperations.write_to_store("coffee_items.csv", [new_coffee_item])
+        print("New coffee Item Created Successfully!!")
     except:
         print("Failed to add coffee item!!")
 
@@ -189,6 +191,7 @@ def remove_coffee_item(coffee_list):
 
         # Publish altered list (with removed coffee_item) to store
         DataStoreOperations.overwrite_store("coffee_items.csv", coffee_items_list)
+        print("Successfully Removed Coffee Item!")
     except:
         print("Failed to update remove coffee item!!")
 
