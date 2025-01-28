@@ -5,6 +5,12 @@ from utils import generate_table, generate_alert
 
 
 def get_totals():
+    """
+    Fetches coffee ingredient totals
+    Creates a dict with the format:
+        coffee_ingredient: amount_available
+        ex. 'coffee': 10000.0, 'milk': 10000.0
+    """
     try:
         read_list = DataStoreOperations.read_from_store("inventory.csv")
         totals = {}
@@ -18,6 +24,12 @@ def get_totals():
 
 
 def get_thresholds():
+    """
+    Fetches coffee ingredient thresholds
+    Creates a dict with the format:
+        coffee_ingredient: amount_available
+        ex. 'coffee': 10000.0, 'milk': 10000.0
+    """
     try:
         read_list = DataStoreOperations.read_from_store("thresholds.csv")
         thresholds = {}
@@ -30,6 +42,9 @@ def get_thresholds():
 
 
 def populate_coffee_items():
+    """
+    Populates coffee_items.csv with a sample list of coffees
+    """
     data = [
         ["coffee_type", "milk", "coffee", "sugar", "vanilla", "cocoa", "cost"],
         ["caffe latte", 150, 18, 30, 0, 0, 12],
@@ -45,6 +60,11 @@ def populate_coffee_items():
 
 
 def generate_coffee_list() -> list[str]:
+    """
+    Creates coffee list of items with format:
+        'index: coffee type'
+        ex. '5: caffe mocha'
+    """
     try:
         read_list = DataStoreOperations.read_from_store("coffee_items.csv")
         coffee_list = []
@@ -58,6 +78,12 @@ def generate_coffee_list() -> list[str]:
 
 
 def generate_coffee_table_list() -> list[str]:
+    """
+    Creates coffee list of items with format:
+        [index, coffee type, cost]
+        ex. ['5', 'caffe mocha', '13']]
+    for use in generating tables
+    """
     try:
         read_list = DataStoreOperations.read_from_store("coffee_items.csv")
         coffee_list = []
@@ -71,6 +97,11 @@ def generate_coffee_table_list() -> list[str]:
 
 
 def create_coffee_items_object():
+    """
+    Creates coffee dict of items with format:
+        coffee type: {coffee_ingredient: amount, coffee_ingredient: amount,...}
+        ex. 'caffe mocha': {'milk': 16.0, 'coffee': 35.0, 'sugar': 0.0, 'vanilla': 30.0, 'cocoa': 13.0}}
+    """
     try:
         coffee_items_list = DataStoreOperations.read_from_store("coffee_items.csv")
         coffee_items_dict = {}
@@ -290,7 +321,3 @@ def replenish_inventory(supply_item, amount):
         print("Successfully updated inventory!!")
     except:
         print("Failed to update inventory!!")
-
-
-# TODO ADD CHECK FOR NON EXISTENT FILES / OR EMPTY FILES AND MANAGE ERRORS
-# add docstrings to functions
